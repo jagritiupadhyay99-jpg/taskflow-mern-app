@@ -8,6 +8,9 @@ This project was built from scratch following industrial-grade patterns, focusin
 
 ## 📸 Application Previews
 
+### 🎬 Full End-to-End Walkthrough (Demo Recording)
+![Demo Walkthrough](demo/recording_demo.webp)
+
 ### 💻 Light-Theme Dashboard
 ![Dashboard Preview](demo/dashboard_preview.png)
 
