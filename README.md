@@ -14,7 +14,7 @@ This project was built from scratch following industrial-grade patterns, focusin
 - **🔍 Search & Dynamic Filters**: Match keywords across titles/descriptions, and filter by priority status.
 - **📅 Smart Sorting**: Order tasks by newest, oldest, or dueDate constraints.
 - **📄 Native Pagination**: Server-side page slicing (6 items per page) to ensure minimal payload transfers.
-- **🎨 Glassmorphic Dark UI**: Premium Obsidian Black theme, translucent blur cards, glowing priority rings, and fluid CSS animations.
+- **🎨 Sleek Light UI**: Premium Slate & Indigo theme, clean white panels, color-coded priority indicators, and fluid CSS animations.
 - **🐳 Dockerized Orchestration**: Rapid local environment spin-up with MongoDB, backend, and frontend fully containerized.
 
 ---
@@ -122,7 +122,7 @@ All routes (except Auth endpoints) require authorization token passed as a Beare
 
 ### Tasks Endpoints
 - **GET** `/api/tasks` — Fetch tasks for the current user.
-  - *Query Parameters*: `search` (string), `status` (pending/completed), `priority` (low/medium/high), `sort` (newest/oldest/dueDate_asc/dueDate_desc), `page` (number).
+-   *Query Parameters*: `search` (string), `status` (pending/completed), `priority` (low/medium/high), `sort` (newest/oldest/dueDate_asc/dueDate_desc), `page` (number).
 - **POST** `/api/tasks` — Create a new task.
 - **PUT** `/api/tasks/:id` — Update title, description, priority, status, or due date.
 - **DELETE** `/api/tasks/:id` — Delete a task.
@@ -136,8 +136,8 @@ All routes (except Auth endpoints) require authorization token passed as a Beare
    - Clean variable and route names.
    - Comprehensive request validation schemas.
 2. **UI/UX**:
-   - Harmonious dark-mode color scheme using curated HSL and CSS tokens.
-   - Glassmorphic panels featuring backdrop-filters and subtle borders.
+   - Harmonious light-theme color scheme using curated slate and indigo design tokens.
+   - Clean card-based panels featuring soft borders and drop shadows for optimal contrast.
    - Interactive hover micro-animations and status transitions.
 3. **Functionality**:
    - Fully operational state management via React Context.
