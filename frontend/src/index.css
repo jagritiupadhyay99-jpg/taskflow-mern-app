@@ -338,7 +338,8 @@ body {
 .auth-brand span {
   background: linear-gradient(135deg, var(--secondary) 0%, #a5b4fc 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .auth-sidebar h1 {
@@ -505,7 +506,8 @@ body {
 .logo-text span {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .user-profile-section {
@@ -673,6 +675,7 @@ body {
   margin-bottom: 20px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
