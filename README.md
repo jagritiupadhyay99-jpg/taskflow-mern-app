@@ -6,6 +6,16 @@ This project was built from scratch following industrial-grade patterns, focusin
 
 ---
 
+## 📸 Application Previews
+
+### 💻 Light-Theme Dashboard
+![Dashboard Preview](demo/dashboard_preview.png)
+
+### 🔑 Split-Panel Authentication
+![Login Preview](demo/login_preview.png)
+
+---
+
 ## ⚡ Key Features
 
 - **🔒 JWT Authentication**: Secure register and login channels utilizing salted bcrypt hashing and JSON Web Tokens.
