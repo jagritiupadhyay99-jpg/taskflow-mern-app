@@ -27,7 +27,7 @@ router.post('/register', validateRegister, async (req, res, next) => {
 
     await user.save();
 
-    // Generate JWT token
+    // User authentication flow: Generate JWT for the newly registered user
     const payload = {
       user: {
         id: user.id
@@ -74,7 +74,7 @@ router.post('/login', validateLogin, async (req, res, next) => {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
-    // Generate JWT token
+    // User authentication flow: Generate JWT for the logged-in user
     const payload = {
       user: {
         id: user.id

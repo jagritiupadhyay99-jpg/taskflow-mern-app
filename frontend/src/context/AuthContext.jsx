@@ -2,15 +2,17 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext();
 
+// React Context provider to manage and store authenticated user state globally
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_URL = 'http://localhost:5000/api';
+  // Load API URL from Vite environment variables with a local fallback
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-  // Load user profile when token is active
+  // Load user profile when token is active on application startup/refresh
   useEffect(() => {
     const fetchUser = async () => {
       if (!token) {
@@ -35,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (err) {
         console.error('Error fetching user context:', err);
-        setError('Unable to reach server. Please check connection.');
+        setError('Unable to reach the server. Please check your internet connection.');
       } finally {
         setLoading(false);
       }
@@ -44,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, [token]);
 
-  // Register user
+  // Authentication flow: User registration
   const register = async (name, email, password) => {
     setLoading(true);
     setError(null);
@@ -65,18 +67,18 @@ export const AuthProvider = ({ children }) => {
         setUser(data.user);
         return { success: true };
       } else {
-        setError(data.msg || 'Registration failed');
-        return { success: false, msg: data.msg || 'Registration failed' };
+        setError(data.msg || 'Unable to complete registration. Please try again.');
+        return { success: false, msg: data.msg || 'Unable to complete registration. Please try again.' };
       }
     } catch (err) {
-      setError('Server connection error. Please try again.');
-      return { success: false, msg: 'Server connection error' };
+      setError('Connection error. Please try again.');
+      return { success: false, msg: 'Connection error' };
     } finally {
       setLoading(false);
     }
   };
 
-  // Login user
+  // Authentication flow: User login
   const login = async (email, password) => {
     setLoading(true);
     setError(null);
@@ -97,12 +99,12 @@ export const AuthProvider = ({ children }) => {
         setUser(data.user);
         return { success: true };
       } else {
-        setError(data.msg || 'Invalid email or password');
-        return { success: false, msg: data.msg || 'Invalid credentials' };
+        setError(data.msg || 'Invalid email or password.');
+        return { success: false, msg: data.msg || 'Invalid email or password.' };
       }
     } catch (err) {
-      setError('Server connection error. Please try again.');
-      return { success: false, msg: 'Server connection error' };
+      setError('Connection error. Please try again.');
+      return { success: false, msg: 'Connection error' };
     } finally {
       setLoading(false);
     }

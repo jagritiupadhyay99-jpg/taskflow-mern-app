@@ -204,7 +204,7 @@ const Register = () => {
               {isSubmitting ? (
                 <>
                   <Loader2 size={18} className="animate-spin" />
-                  <span>Creating account...</span>
+                  <span>Registering...</span>
                 </>
               ) : (
                 <>

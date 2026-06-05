@@ -4,14 +4,13 @@ const auth = require('../middleware/auth');
 const Task = require('../models/Task');
 const { validateTask } = require('../middleware/validate');
 
-// @route   GET api/tasks
-// @desc    Get all tasks for a user (with search, filter, pagination)
+// Protected route: Get all tasks for an authenticated user (with search, filter, pagination)
 // @access  Private
 router.get('/', auth, async (req, res, next) => {
   try {
     const { search, status, priority, sort, page = 1, limit = 6 } = req.query;
     
-    // Construct query object
+    // Search/filter query building based on user input
     const query = { userId: req.user.id };
 
     // Search filter (regex search on title or description)
@@ -42,7 +41,7 @@ router.get('/', auth, async (req, res, next) => {
       else if (sort === 'title_desc') sortOptions = { title: -1 };
     }
 
-    // Pagination calculations
+    // Calculate records to skip for pagination
     const pageNum = parseInt(page);
     const limitNum = parseInt(limit);
     const skip = (pageNum - 1) * limitNum;

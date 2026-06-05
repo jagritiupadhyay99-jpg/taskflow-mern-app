@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { 
   LogOut, Plus, Search, Calendar, CheckCircle2, Circle, AlertCircle, 
-  Trash2, Edit, ChevronLeft, ChevronRight, X, Clock, HelpCircle, Sparkles,
-  Info, CheckSquare, ListTodo
+  Trash2, Edit, ChevronLeft, ChevronRight, X, Sparkles, ListTodo
 } from 'lucide-react';
 
 const Dashboard = () => {
@@ -32,8 +31,9 @@ const Dashboard = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalTasks, setTotalTasks] = useState(0);
 
-  // Modal States
+  // Modal and Save Loading States
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [modalMode, setModalMode] = useState('create'); // 'create' or 'edit'
   const [currentTaskId, setCurrentTaskId] = useState(null);
   
@@ -51,7 +51,7 @@ const Dashboard = () => {
     setLoading(true);
     setError(null);
     try {
-      // Build query string
+      // Search/filter query building: construct parameters for the API call
       const params = new URLSearchParams({
         search,
         status: statusFilter,
@@ -74,11 +74,11 @@ const Dashboard = () => {
         setTotalPages(data.totalPages);
         setTotalTasks(data.totalTasks);
       } else {
-        setError(data.msg || 'Could not fetch tasks.');
+        setError(data.msg || 'Unable to load tasks. Please try again.');
       }
     } catch (err) {
       console.error(err);
-      setError('Could not reach the server. Please try again later.');
+      setError('Unable to load tasks. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -195,6 +195,7 @@ const Dashboard = () => {
       dueDate: formDueDate ? new Date(formDueDate) : null
     };
 
+    setIsSaving(true);
     try {
       const url = modalMode === 'create' 
         ? `${API_URL}/tasks` 
@@ -217,11 +218,13 @@ const Dashboard = () => {
         setIsModalOpen(false);
         fetchTasks();
       } else {
-        setFormError(data.msg || 'Failed to save task.');
+        setFormError(data.msg || 'Unable to save task. Please try again.');
       }
     } catch (err) {
       console.error(err);
-      setFormError('Server connection issue.');
+      setFormError('Unable to save task. Please try again.');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -353,7 +356,7 @@ const Dashboard = () => {
               animation: 'spin 1s linear infinite'
             }}></div>
             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-            <p style={{ color: 'var(--text-muted)' }}>Loading workspace tasks...</p>
+            <p style={{ color: 'var(--text-muted)' }}>Loading tasks...</p>
           </div>
         ) : tasks.length === 0 ? (
           <div className="empty-state">
@@ -557,11 +560,11 @@ const Dashboard = () => {
               </div>
 
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)}>
+                <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)} disabled={isSaving}>
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary">
-                  {modalMode === 'create' ? 'Create Task' : 'Save Changes'}
+                <button type="submit" className="btn btn-primary" disabled={isSaving}>
+                  {isSaving ? 'Saving task...' : (modalMode === 'create' ? 'Create Task' : 'Save Changes')}
                 </button>
               </div>
             </form>

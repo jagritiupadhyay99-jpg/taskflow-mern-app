@@ -18,6 +18,7 @@ module.exports = (req, res, next) => {
   }
 
   try {
+    // Verify JWT before allowing access to the protected route
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded.user;
     next();
